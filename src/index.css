@@ -1,0 +1,435 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+/* ============================================================
+   SIGNAL GRADIENT DESIGN SYSTEM
+   4-color pipeline: Raw (Amber) → Process (Blue) → Transform (Violet) → Output (Cyan)
+   ============================================================ */
+
+@theme {
+  /* Backgrounds */
+  --color-void: #0A0E17;
+  --color-background: #0A0E17;
+  --color-surface: #131A27;
+  --color-surface-line: #1F2937;
+  --color-card: #131A27;
+  --color-card-elevated: #182234;
+  --color-card-hover: #1C2840;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-light: rgba(255, 255, 255, 0.14);
+
+  /* Signal Gradient Colors — pipeline-mapped */
+  --color-signal-raw: #F5A524;
+  --color-signal-process: #3B82F6;
+  --color-signal-transform: #A855F7;
+  --color-signal-output: #22D3EE;
+
+  /* Legacy aliases (keep for existing code) */
+  --color-primary: #3B82F6;
+  --color-primary-dark: #2563EB;
+  --color-secondary: #22D3EE;
+  --color-success: #10B981;
+  --color-violet: #A855F7;
+  --color-warning: #F5A524;
+  --color-danger: #EF4444;
+
+  /* Text */
+  --color-text: #F1F5F9;
+  --color-text-secondary: #94A3B8;
+  --color-muted: #8B98AC;
+
+  /* Typography */
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+}
+
+/* ============================================================
+   BASE & RESET
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-void);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: var(--color-signal-process);
+  color: #FFFFFF;
+}
+
+/* ============================================================
+   CUSTOM SCROLLBAR
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-void);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ============================================================
+   SURFACES & CONTAINERS
+   ============================================================ */
+
+.panel-surface {
+  background: var(--color-surface);
+  border: 1px solid var(--color-surface-line);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.panel-elevated {
+  background: var(--color-card-elevated);
+  border: 1px solid var(--color-surface-line);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.panel-elevated:hover {
+  background: var(--color-card-hover);
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(59, 130, 246, 0.06);
+}
+
+/* Section Spacing */
+.section-padding {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+}
+
+/* Container */
+.container-custom {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .container-custom {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-custom {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-signal-process);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.875rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  color: var(--color-text);
+}
+
+.section-desc {
+  font-size: clamp(0.95rem, 1.6vw, 1.125rem);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  max-width: 680px;
+}
+
+/* ============================================================
+   SIGNAL GRADIENT UTILITIES
+   ============================================================ */
+
+.signal-gradient-text {
+  background: linear-gradient(
+    90deg,
+    var(--color-signal-raw) 0%,
+    var(--color-signal-process) 33%,
+    var(--color-signal-transform) 66%,
+    var(--color-signal-output) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.signal-gradient-border {
+  border-image: linear-gradient(
+    90deg,
+    var(--color-signal-raw),
+    var(--color-signal-process),
+    var(--color-signal-transform),
+    var(--color-signal-output)
+  ) 1;
+}
+
+.signal-gradient-line {
+  background: linear-gradient(
+    90deg,
+    var(--color-signal-raw),
+    var(--color-signal-process),
+    var(--color-signal-transform),
+    var(--color-signal-output)
+  );
+}
+
+.signal-gradient-line-vertical {
+  background: linear-gradient(
+    180deg,
+    var(--color-signal-raw),
+    var(--color-signal-process),
+    var(--color-signal-transform),
+    var(--color-signal-output)
+  );
+}
+
+/* ============================================================
+   SIGNAL-COLOR CATEGORY TAGS
+   ============================================================ */
+
+.tag-signal-raw {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  background: rgba(245, 165, 36, 0.08);
+  border: 1px solid rgba(245, 165, 36, 0.25);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--color-signal-raw);
+}
+
+.tag-signal-process {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--color-signal-process);
+}
+
+.tag-signal-transform {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  background: rgba(168, 85, 247, 0.08);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--color-signal-transform);
+}
+
+.tag-signal-output {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  background: rgba(34, 211, 238, 0.08);
+  border: 1px solid rgba(34, 211, 238, 0.25);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--color-signal-output);
+}
+
+/* ============================================================
+   BACKGROUND GRIDS & AMBIENCE
+   ============================================================ */
+
+.bg-grid-engine {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.bg-radial-glow {
+  background: radial-gradient(ellipse at 50% 0%, rgba(59, 130, 246, 0.07) 0%, rgba(168, 85, 247, 0.03) 40%, transparent 70%);
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.btn-primary-glow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  background: var(--color-signal-process);
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 0.875rem;
+  font-family: var(--font-mono);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  box-shadow: 0 4px 18px rgba(59, 130, 246, 0.35);
+}
+
+.btn-primary-glow:hover {
+  background: var(--color-primary-dark);
+  box-shadow: 0 6px 26px rgba(59, 130, 246, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-primary-glow:focus-visible {
+  outline: 2px solid var(--color-signal-output);
+  outline-offset: 2px;
+}
+
+.btn-secondary-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: 0.875rem;
+  font-family: var(--font-mono);
+  border-radius: 10px;
+  border: 1px solid var(--color-surface-line);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-secondary-dark:hover {
+  background: var(--color-card-elevated);
+  border-color: var(--color-signal-process);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.btn-secondary-dark:focus-visible {
+  outline: 2px solid var(--color-signal-output);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   TELEMETRY TAGS (legacy — keep for backwards compat)
+   ============================================================ */
+
+.tag-telemetry {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--color-signal-process);
+}
+
+.tag-telemetry-emerald {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: #10B981;
+}
+
+.tag-telemetry-muted {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.55rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-surface-line);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--color-text-secondary);
+}
+
+/* ============================================================
+   MARQUEE ANIMATION
+   ============================================================ */
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ============================================================
+   FOCUS STATES (Accessibility)
+   ============================================================ */
+
+*:focus-visible {
+  outline: 2px solid var(--color-signal-output);
+  outline-offset: 2px;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-signal-output);
+  outline-offset: 2px;
+}
