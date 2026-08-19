@@ -1,10 +1,12 @@
 import Navbar from "./components/layout/Navbar";
 import { Hero } from "./components/sections/Hero";
 import { TrustStrip } from "./components/sections/TrustStrip";
+import { WhoIHelp } from "./components/sections/WhoIHelp";
 import { WhatIAutomate } from "./components/sections/WhatIAutomate";
 import BusinessImpact from "./components/sections/BusinessImpact";
 import InteractiveCaseStudies from "./components/sections/InteractiveCaseStudies";
 import ExcelShowcase from "./components/sections/ExcelShowcase";
+import StreamlitShowcase from "./components/sections/StreamlitShowcase";
 import Experience from "./components/sections/Experience";
 import HowIWork from "./components/sections/HowIWork";
 import Skills from "./components/sections/Skills";
@@ -14,17 +16,19 @@ import Footer from "./components/layout/Footer";
 
 function App() {
   return (
-    <div className="min-h-screen bg-[#0A0E17] text-[#F1F5F9] selection:bg-[#3B82F6] selection:text-white font-sans antialiased overflow-x-hidden">
+    <div className="min-h-screen bg-[#050505] text-[#F1F5F9] selection:bg-[#3B82F6] selection:text-white font-sans antialiased overflow-x-hidden">
       <Navbar />
       <main>
         <Hero />
         <TrustStrip />
+        <WhoIHelp />
         <WhatIAutomate />
         <BusinessImpact />
         <InteractiveCaseStudies />
         <ExcelShowcase />
-        <Experience />
+        <StreamlitShowcase />
         <HowIWork />
+        <Experience />
         <Skills />
         <About />
         <Contact />

@@ -11,45 +11,180 @@ import {
   MapPin,
   Code2,
   Globe,
-  Briefcase
+  Briefcase,
+  Layers,
+  Cpu,
+  Zap,
+  TrendingUp,
+  CheckCircle2,
+  ShieldCheck,
+  Calendar,
+  AlertTriangle,
+  Send,
+  SlidersHorizontal,
+  TableProperties
 } from "lucide-react";
+
+// Base URL helper for GitHub Pages and local development
+export const getAssetUrl = (path: string): string => {
+  const base = import.meta.env.BASE_URL || "/";
+  const cleanPath = path.startsWith("/") ? path.slice(1) : path;
+  const cleanBase = base.endsWith("/") ? base : `${base}/`;
+  return `${cleanBase}${cleanPath}`;
+};
+
+export interface ProjectScreenshot {
+  id: string;
+  title: string;
+  caption: string;
+  description: string;
+  cardUrl: string;
+  fullUrl: string;
+  thumbUrl: string;
+  aspectRatio: string;
+  tag?: string;
+}
+
+export interface PortfolioProject {
+  id: string;
+  number: string;
+  title: string;
+  tagline: string;
+  category: "streamlit-dashboard" | "excel-automation" | "production-planning";
+  featured: boolean;
+  appType: "Streamlit Web App" | "Excel Pipeline" | "Optimization Engine";
+  appUrl?: string;
+  description: string;
+  problem: string;
+  solution: string;
+  input: string;
+  output: string;
+  technologies: string[];
+  keyFeatures: string[];
+  businessOutcome: string;
+  metrics: Record<string, string>;
+  screenshots: ProjectScreenshot[];
+  demoUrl?: string;
+  codeUrl?: string;
+}
+
+export interface SiteConfigType {
+  personal: {
+    name: string;
+    roleTitle: string;
+    headline: string;
+    subHeadline: string;
+    bio: string;
+    positioningStatement: string;
+    trustBadge: string;
+    email: string;
+    phone: string;
+    location: string;
+    availability: string;
+    profileImage: string;
+  };
+  socialLinks: {
+    code: string;
+    portfolio: string;
+    github: string;
+    linkedin: string;
+  };
+  currentRole: {
+    company: string;
+    department: string;
+    location: string;
+    period: string;
+    duration: string;
+    description: string;
+    responsibilities: string[];
+    highlights: string[];
+  };
+  navigation: { label: string; href: string }[];
+  trustItems: string[];
+  targetAudience: {
+    id: string;
+    title: string;
+    pain: string;
+    solution: string;
+    icon: string;
+    accent: string;
+  }[];
+  services: {
+    id: string;
+    number: string;
+    title: string;
+    icon: string;
+    description: string;
+    outcome: string;
+    examples: string[];
+    typicalInput: string;
+    automatedOutput: string;
+  }[];
+  projects: PortfolioProject[];
+  projectCategories: { id: string; label: string }[];
+  experience: {
+    company: string;
+    subtitle?: string;
+    role: string;
+    department: string;
+    period: string;
+    duration: string;
+    location: string;
+    current: boolean;
+    achievements: string[];
+    highlights: string[];
+  }[];
+  education: { degree: string; institution: string; period: string }[];
+  certifications: { name: string; institution: string; period: string }[];
+  awards: { title: string; date: string; description: string }[];
+  skills: Record<string, string[]>;
+  impact: { qualitative: { title: string; description: string; icon: string }[] };
+  process: { step: string; title: string; description: string }[];
+  contactForm: {
+    heading: string;
+    subheading: string;
+    primaryCTA: string;
+    secondaryCTA: string;
+  };
+}
 
 // ============================================================
 // SINGLE EDITABLE CONFIGURATION FILE
-// Edit this file to update ALL portfolio content.
 // ============================================================
 
-export const siteConfig = {
+export const siteConfig: SiteConfigType = {
   // ----------------------------------------------------------
   // PERSONAL INFORMATION
   // ----------------------------------------------------------
   personal: {
     name: "Nikhil Waradkar",
+    roleTitle: "Business Automation Consultant • Manufacturing & SCM Specialist",
     headline: "Automate Your Excel Work. Turn Your Data Into Action.",
     subHeadline:
-      "Python Automation • Excel Automation • Streamlit Dashboards • Business Reporting",
-    bio: "Manufacturing and PPC/SCM professional with 12+ years of industry experience, combining deep shopfloor & production planning domain expertise with Python automation, custom Excel pipelines, interactive Streamlit dashboards, and AI-driven reporting systems.",
+      "Python Automation • Custom Excel Pipelines • Streamlit Dashboards • Business Reporting",
+    bio: "Manufacturing and PPC/SCM professional with 12+ years of shopfloor & production planning expertise. I design and build production-grade Python automation systems, robust multi-file Excel pipelines, and interactive Streamlit web dashboards that eliminate manual human error.",
     positioningStatement:
       "I don't just write scripts — I understand the business process behind the spreadsheet.",
     trustBadge: "12+ Years Industry Experience • Production Planning & SCM",
     email: "ngwaradkar@gmail.com",
     phone: "+91-8668634502",
     location: "Pune, Maharashtra, India",
-    availability: "Available for freelance & consulting projects",
+    availability: "Available for consulting & freelance automation projects",
     profileImage: "",
   },
 
   // ----------------------------------------------------------
-  // SOCIAL LINKS (Real verified URLs from workspace)
+  // SOCIAL & REPO LINKS
   // ----------------------------------------------------------
   socialLinks: {
-    Code2: "https://ngwaradkar.github.io/nikhil-waradkar/",
-    portfolio: "",
+    code: "https://ngwaradkar.github.io/nikhil-waradkar/",
+    portfolio: "https://ngwaradkar.github.io/nikhil/",
+    github: "https://github.com/ngwaradkar",
     linkedin: "",
   },
 
   // ----------------------------------------------------------
-  // CURRENT ROLE (Tata Motors Passenger Vehicle Ltd)
+  // CURRENT & PAST WORKSPACE ROLES
   // ----------------------------------------------------------
   currentRole: {
     company: "Tata Motors Passenger Vehicle Ltd",
@@ -79,11 +214,12 @@ export const siteConfig = {
   // ----------------------------------------------------------
   navigation: [
     { label: "Overview", href: "#hero" },
-    { label: "Services", href: "#services" },
-    { label: "Transformation", href: "#transformation" },
-    { label: "Projects", href: "#projects" },
+    { label: "Who I Help", href: "#who-i-help" },
+    { label: "What I Automate", href: "#services" },
+    { label: "Before vs After", href: "#transformation" },
+    { label: "Featured Projects", href: "#projects" },
     { label: "Excel Pipeline", href: "#excel-showcase" },
-    { label: "Dashboards", href: "#streamlit-showcase" },
+    { label: "Streamlit Apps", href: "#streamlit-showcase" },
     { label: "Experience", href: "#experience" },
     { label: "Process", href: "#process" },
     { label: "Contact", href: "#contact" },
@@ -104,7 +240,45 @@ export const siteConfig = {
   ],
 
   // ----------------------------------------------------------
-  // SERVICES (01 to 06 matching user brief)
+  // WHO I HELP (Target Audiences)
+  // ----------------------------------------------------------
+  targetAudience: [
+    {
+      id: "plant-heads",
+      title: "Manufacturing & Plant Heads",
+      pain: "Production bottlenecks, line starvation, and delayed shift reports holding back executive decisions.",
+      solution: "Real-time production visibility, automated shift reports, and deterministic finite capacity scheduling.",
+      icon: "Factory",
+      accent: "#3B82F6",
+    },
+    {
+      id: "ppc-scm-managers",
+      title: "PPC & Supply Chain Managers",
+      pain: "Spending 3+ hours every morning manually reconciling stock files, WIP buffers, and component shortages.",
+      solution: "1-click multi-file ingestion, automated FIFO clear-to-build calculations, and live shortage alerts.",
+      icon: "Layers",
+      accent: "#06B6D4",
+    },
+    {
+      id: "operations-teams",
+      title: "Operations & Logistics Teams",
+      pain: "Fragile Excel formulas breaking (#N/A, #REF!), manual copy-paste errors, and static outdated spreadsheets.",
+      solution: "Bulletproof Python data pipelines with built-in validation rules and clean, styled Excel deliverables.",
+      icon: "FileSpreadsheet",
+      accent: "#10B981",
+    },
+    {
+      id: "business-leaders",
+      title: "Business Leaders & Executives",
+      pain: "Lack of interactive analytics and waiting days for custom data requests across disconnected systems.",
+      solution: "Interactive Streamlit web applications with live filters, date pickers, and exportable executive views.",
+      icon: "LayoutDashboard",
+      accent: "#F59E0B",
+    },
+  ],
+
+  // ----------------------------------------------------------
+  // SERVICES (01 to 06)
   // ----------------------------------------------------------
   services: [
     {
@@ -113,7 +287,7 @@ export const siteConfig = {
       title: "Python Excel Automation",
       icon: "FileSpreadsheet",
       description:
-        "Convert repetitive multi-file Excel processes into clean, one-click automated Python scripts.",
+        "Convert repetitive multi-file Excel processes into clean, 1-click automated Python scripts.",
       outcome: "Eliminates 90%+ of manual copy-paste time while guaranteeing 100% mathematical consistency.",
       examples: [
         "Multi-file workbook consolidation",
@@ -135,7 +309,7 @@ export const siteConfig = {
       examples: [
         "Daily production & shift summaries",
         "Weekly executive status decks",
-        "Monthly management KPI decks",
+        "Telegram & email report dispatch",
         "Automated PDF & Excel distribution",
       ],
       typicalInput: "Raw transactional dumps from ERP / MES",
@@ -212,23 +386,26 @@ export const siteConfig = {
   ],
 
   // ----------------------------------------------------------
-  // PROJECTS (Actual real projects from workspace)
+  // PROJECTS WITH VERIFIED REAL SCREENSHOTS
   // ----------------------------------------------------------
   projects: [
     {
       id: "vin-generation-dashboard",
+      number: "01",
       title: "VIN Generation PPC Dashboard",
+      tagline: "Live Painted Body Storage (PBS) Buffer Allocation & Multi-Stage Material Availability Summary",
       category: "streamlit-dashboard",
       featured: true,
+      appType: "Streamlit Web App",
+      appUrl: "plantest.streamlit.app",
       description:
-        "Enterprise-grade production planning dashboard for automotive assembly lines, managing vehicle scheduling across paint shop and final assembly stages.",
+        "Mission-critical production planning and VIN allocation system for automotive passenger vehicle assembly lines, coordinating TCF1 and TCF2 production tracks with multi-stage material verification.",
       problem:
-        "Scheduling vehicle drops onto assembly lines without real-time component stock verification causes line blockages, starved buffer tracks, and costly rework.",
+        "Scheduling vehicle drops onto assembly lines without real-time component stock verification causes line starvation, buffer track congestion, and expensive shopfloor rework.",
       solution:
-        "Built a live Streamlit dashboard with dynamic shift inventory tracking, FIFO clear-to-build allocation engine, and multi-stage pipeline visibility across 9 paint shop stages.",
-      input: "Paint float reports, VIN generation data, component stock files, BOM master",
-      output:
-        "Real-time FIFO allocation queues, automated Excel reports, shift summary broadcasts, shortage alerts",
+        "Engineered an interactive Streamlit operations center with 10-channel data upload, FIFO clear-to-build allocation engine, live shortage alerts, hour-by-hour drop tracking, and automated Telegram broadcasts.",
+      input: "Paint float reports (.xlsb/.xlsx), VIN generation dumps, engine & wiring stock files, BOM master",
+      output: "Real-time FIFO allocation queues, automated Excel reports, shift summaries, shortage matrices",
       technologies: [
         "Python",
         "Streamlit",
@@ -238,36 +415,207 @@ export const siteConfig = {
         "Matplotlib",
       ],
       keyFeatures: [
-        "FIFO clear-to-build allocation engine",
-        "9-channel data integration",
-        "BOM completeness auditing",
-        "Automated shift reports",
-        "Quality hold isolation",
-        "Planner inline override mode",
+        "10-Channel automated data synchronization",
+        "Shop-wise daily production summary (Dropping, Paint Lifting, T60/T40 counts)",
+        "Model-wise production matrix across TCF1 & TCF2 lines",
+        "Hourly production & line generation tracker with visual drop trends",
+        "Engine & battery requirement FIFO clear-to-build calculator",
+        "Automated BOM validation engine alerting on missing vehicle codes",
+        "15-Minute scheduled Telegram report dispatcher",
       ],
+      businessOutcome:
+        "Replaced 3.5 hours of daily manual spreadsheet collation with a sub-10-second automated refresh cycle, providing deterministic visibility across 980+ plant float vehicles.",
       metrics: {
-        linesOfCode: "4,683",
-        dataChannels: "9",
-        vehicleModels: "10+",
+        runtime: "3.5 hrs ➔ < 10 sec",
+        dataChannels: "10 Channels",
+        plantFloat: "980+ Cabs",
+        validation: "100% BOM Audit",
       },
-      screenshots: [],
-      demoUrl: "",
-      Code2Url: "",
+      screenshots: [
+        {
+          id: "vin_dashboard_main",
+          title: "Main Operations Center",
+          caption: "Plant production summary, model-wise matrix, hourly drop tracking & engine clearances",
+          description: "Live dashboard overview showing daily vehicle drops across TCF1 and TCF2 tracks with hour-by-hour telemetry and clear-to-build balance.",
+          cardUrl: getAssetUrl("projects/cards/vin_dashboard_main.png"),
+          fullUrl: getAssetUrl("projects/full/vin_dashboard_main.png"),
+          thumbUrl: getAssetUrl("projects/thumbs/vin_dashboard_main.png"),
+          aspectRatio: "16/10",
+          tag: "Operations Overview",
+        },
+        {
+          id: "vin_dashboard_shortage",
+          title: "Cockpit & Wiring Shortage Matrix",
+          caption: "Component availability tracker with 6:30 AM shift clearance exceed alerts",
+          description: "Detailed breakdown of cockpit assemblies and wiring harness shortages matched against PBS and total paint shop float.",
+          cardUrl: getAssetUrl("projects/cards/vin_dashboard_shortage.png"),
+          fullUrl: getAssetUrl("projects/full/vin_dashboard_shortage.png"),
+          thumbUrl: getAssetUrl("projects/thumbs/vin_dashboard_shortage.png"),
+          aspectRatio: "16/10",
+          tag: "Shortage Matrix",
+        },
+        {
+          id: "vin_dashboard_float_search",
+          title: "Total Float Details & Cab Search",
+          caption: "Real-time WIP vehicle search with quality hold isolation & blocking reasons",
+          description: "Granular search engine tracking 982 cabs across all paint shop stages with live status badges and root-cause blocking reasons.",
+          cardUrl: getAssetUrl("projects/cards/vin_dashboard_float_search.png"),
+          fullUrl: getAssetUrl("projects/full/vin_dashboard_float_search.png"),
+          thumbUrl: getAssetUrl("projects/thumbs/vin_dashboard_float_search.png"),
+          aspectRatio: "16/10",
+          tag: "WIP Search Engine",
+        },
+        {
+          id: "vin_dashboard_telegram",
+          title: "Automated Telegram Dispatcher",
+          caption: "15-Minute interval shift broadcasts with live production & shortage metrics",
+          description: "Scheduled dispatch engine formatting live shift KPIs into structured Telegram notifications for shopfloor supervisors and management.",
+          cardUrl: getAssetUrl("projects/cards/vin_dashboard_telegram.png"),
+          fullUrl: getAssetUrl("projects/full/vin_dashboard_telegram.png"),
+          thumbUrl: getAssetUrl("projects/thumbs/vin_dashboard_telegram.png"),
+          aspectRatio: "16/10",
+          tag: "Automated Broadcast",
+        },
+      ],
+    },
+    {
+      id: "vin-production-plan",
+      number: "02",
+      title: "TML VIN Generation & Production Plan",
+      tagline: "Automated Multi-Day Rolling Sequence Optimizer for Assembly Lines",
+      category: "production-planning",
+      featured: true,
+      appType: "Optimization Engine",
+      appUrl: "vinplan.streamlit.app",
+      description:
+        "Multi-day rolling production sequencing and constraint optimizer for TCF 1 (Punch EV / Petrol) and TCF 2 (Harrier / Safari) assembly lines with dynamic float matching.",
+      problem:
+        "Balancing multi-day production schedules across BIW, Paint Shop, and TCF assembly lines while strictly respecting variant constraints (EV, CNG, TGDI Petrol, Diesel) is mathematically intractable manually.",
+      solution:
+        "Built a 3-4 day rolling planning engine that prioritizes vehicle float by source (Paint Floor ➔ WIP BIW ➔ BIW Plan ➔ Next 3-Days BIW) and calculates powertrain quota limits.",
+      input: "Yesterday's VIN plans, today's VIN lists, paint float reports, WIP data, BIW schedules (10 channels)",
+      output: "Optimized multi-day production schedules (Excel), model plan summaries, shortage remark alerts",
+      technologies: [
+        "Python",
+        "Streamlit",
+        "Pandas",
+        "NumPy",
+        "OpenPyXL",
+      ],
+      keyFeatures: [
+        "3-4 Day rolling planning horizon with automatic capacity packing",
+        "Multi-stage float matching (Paint Floor, WIP in BIW, Loaded Plan, 3-Day BIW)",
+        "Powertrain variant constraint enforcement (Punch EV, Punch CNG, Harrier EV, Safari Diesel)",
+        "Automated target shortage & production remark detection",
+        "Color-coded source type vehicle counting",
+        "Interactive 3D vehicle fleet showcase",
+      ],
+      businessOutcome:
+        "Provides 100% deterministic multi-day line allocation across 10 vehicle models, preventing line starvation and eliminating manual sequencing errors.",
+      metrics: {
+        horizon: "3-4 Rolling Days",
+        channels: "10 Files Ingested",
+        lines: "2 Assembly Tracks",
+        accuracy: "100% Constraint Match",
+      },
+      screenshots: [
+        {
+          id: "vin_production_plan_main",
+          title: "Sequence Optimizer & Capacity Control",
+          caption: "10-Channel file upload, shift production targets & daily capacity limits",
+          description: "Multi-day planning interface managing daily vehicle targets and powertrain allocations for TCF1 and TCF2 tracks.",
+          cardUrl: getAssetUrl("projects/cards/vin_production_plan_main.png"),
+          fullUrl: getAssetUrl("projects/full/vin_production_plan_main.png"),
+          thumbUrl: getAssetUrl("projects/thumbs/vin_production_plan_main.png"),
+          aspectRatio: "16/10",
+          tag: "Capacity Control",
+        },
+        {
+          id: "vin_production_plan_fleet",
+          title: "Fleet Breakdown & Shortage Remarks",
+          caption: "Model plan summaries (NOVA EV, CNG, Eturna) and shortage warnings",
+          description: "Visual breakdown of scheduled vehicle codes with alert callouts for target shortages across rolling production days.",
+          cardUrl: getAssetUrl("projects/cards/vin_production_plan_fleet.png"),
+          fullUrl: getAssetUrl("projects/full/vin_production_plan_fleet.png"),
+          thumbUrl: getAssetUrl("projects/thumbs/vin_production_plan_fleet.png"),
+          aspectRatio: "16/10",
+          tag: "Fleet Analytics",
+        },
+      ],
+    },
+    {
+      id: "datewise-planning",
+      number: "03",
+      title: "Datewise Production Planning System",
+      tagline: "Finite Capacity Multi-Line Scheduling Engine with Setup Loss Deductions",
+      category: "excel-automation",
+      featured: true,
+      appType: "Excel Pipeline",
+      appUrl: "weekly.streamlit.app",
+      description:
+        "Finite capacity scheduling system for automotive component manufacturing, allocating weekly and monthly production targets across 13 dedicated manufacturing lines.",
+      problem:
+        "Manual day-wise production scheduling across 13 manufacturing lines doesn't accurately factor in major/minor setup changeover losses, variable daily capacities, or plant holiday calendars.",
+      solution:
+        "Developed a capacity-aware scheduling engine with setup time deductions (Major: 240 mins, Minor: 60 mins), sequential multi-day backlog rollover, Sunday/holiday skipping, and Excel export.",
+      input: "Excel production plan with part numbers, line assignments, and setup flags",
+      output: "Datewise production schedule (Excel), official weekly formatted reports (PRH.F.46.00), PDF summaries",
+      technologies: [
+        "Python",
+        "Streamlit",
+        "Pandas",
+        "NumPy",
+        "XlsxWriter",
+        "OpenPyXL",
+        "ReportLab",
+      ],
+      keyFeatures: [
+        "Finite capacity scheduling across 13 dedicated manufacturing lines",
+        "Dual operational planning modes: Weekly & Monthly planning",
+        "Automated setup loss deduction engine (240 min Major / 60 min Minor)",
+        "Operating time budget: 1,320 mins/day with line-specific throughput limits",
+        "Intelligent calendar handling (automatic Sunday and plant holiday skips)",
+        "Standardized Excel report generation with formatted print templates",
+      ],
+      businessOutcome:
+        "Replaced manual multi-tab calculation with an instant 1-click planner that guarantees 100% capacity adherence across 13 lines without line overbooking.",
+      metrics: {
+        lines: "13 Lines Scheduled",
+        dailyMinutes: "1,320 Mins/Day",
+        setupLogic: "240m / 60m Deducted",
+        output: "Official PRH Report",
+      },
+      screenshots: [
+        {
+          id: "datewise_planning_main",
+          title: "Weekly Planning & Line Capacities",
+          caption: "Finite capacity configuration for 13 manufacturing lines & template download",
+          description: "Operational interface defining line capacities (Arjun-1 to Arjun-12 and AutoLine) with holiday calendar selection and Excel upload.",
+          cardUrl: getAssetUrl("projects/cards/datewise_planning_main.png"),
+          fullUrl: getAssetUrl("projects/full/datewise_planning_main.png"),
+          thumbUrl: getAssetUrl("projects/thumbs/datewise_planning_main.png"),
+          aspectRatio: "16/10",
+          tag: "Capacity Scheduler",
+        },
+      ],
     },
     {
       id: "shortage-float-tracker",
+      number: "04",
       title: "PPC Shortage & Float Tracker",
+      tagline: "Real-Time Critical Component Shortage Monitoring & 6:30 AM Shift Reset",
       category: "streamlit-dashboard",
       featured: true,
+      appType: "Streamlit Web App",
+      appUrl: "plantest.streamlit.app",
       description:
-        "Real-time component shortage monitoring system tracking wiring harnesses, cockpit assemblies, engines, and batteries across paint shop pipeline buffers.",
+        "Real-time component shortage monitoring system tracking critical parts (cockpit assemblies, wiring harnesses, engines, batteries) against paint shop pipeline stages.",
       problem:
-        "Manual spreadsheet monitoring of component shortages across shifts is error-prone, slow, and fails to provide real-time visibility into critical part availability.",
+        "Manual tracking of high-value vehicle sub-assemblies across shift transitions leads to unspotted shortages and emergency line stoppages.",
       solution:
-        "Built a 6-tab Streamlit dashboard with automated PBS/Sealant/Total Float shortage calculations, BOM validation, and shift auto-reset at 6:30 AM IST.",
-      input: "Paint float reports (.xlsb/.xlsx), DPT plans, wiring/cockpit/engine stock files, BOM master",
-      output:
-        "Interactive shortage dashboards, formatted Excel exports, high-fidelity PNG table images",
+        "Engineered an automated 6-tab Streamlit dashboard computing PBS float, Sealant float, and Total Float component shortages with automatic 6:30 AM IST shift resets.",
+      input: "Paint float reports (.xlsb/.xlsx), DPT production plans, stock dumps, BOM master",
+      output: "Interactive shortage matrices, pre-formatted Excel downloads, high-res PNG table exports",
       technologies: [
         "Python",
         "Streamlit",
@@ -276,202 +624,215 @@ export const siteConfig = {
         "OpenPyXL",
         "pyxlsb",
         "BeautifulSoup4",
-        "Matplotlib",
       ],
       keyFeatures: [
-        "6 interactive analysis tabs",
-        "Automated 6:30 AM shift reset",
-        "BOM validation engine",
-        "Critical shortage alerts",
-        "Multi-format file parsing (xlsb, xlsx, html-as-xls)",
-        "PNG image export for sharing",
+        "6 Interactive analysis tabs with live category filtering",
+        "Automated 6:30 AM IST shift reset and stock clearance baseline",
+        "Component-level tracking: 126 cockpits, 59 wiring harnesses",
+        "Critical shortage visual alert highlights",
+        "Multi-format file parsing (.xlsb, .xlsx, HTML-as-XLS)",
+        "Exportable Excel workbooks and instant table downloads",
       ],
+      businessOutcome:
+        "Gives production planning and logistics teams instant clarity on component bottlenecks before bodies enter the final assembly tracks.",
       metrics: {
-        tabs: "6",
-        componentTypes: "4 (Engine, Wiring, Cockpit, Battery)",
-        floatStages: "11",
+        components: "4 Critical Streams",
+        cockpitsMonitored: "126 Part Numbers",
+        wiringMonitored: "59 Part Numbers",
+        shiftReset: "6:30 AM Automated",
       },
-      screenshots: [],
-      demoUrl: "",
-      Code2Url: "",
-    },
-    {
-      id: "vin-production-plan",
-      title: "VIN Generation & Production Plan",
-      category: "production-planning",
-      featured: true,
-      description:
-        "Multi-day rolling production sequencing system with automated float matching, variant constraint enforcement, and shortage detection.",
-      problem:
-        "Manual scheduling across BIW, Paint Shop, and TCF assembly stages leads to bottlenecks, float imbalances, and production delays.",
-      solution:
-        "Automated 3-4 day rolling production planning with multi-stage float prioritization (Paint Floor → WIP → BIW Plan → Next 3-Days BIW) and powertrain variant limits.",
-      input: "Yesterday's VIN plans, today's VIN lists, paint float report, WIP data, BIW plans",
-      output:
-        "Optimized 3-day production schedules (Excel), model plan summaries, shortage warnings",
-      technologies: ["Python", "Streamlit", "OpenPyXL"],
-      keyFeatures: [
-        "3-4 day rolling planning horizon",
-        "Multi-stage float matching & prioritization",
-        "Powertrain variant constraint enforcement (EV, CNG, Petrol, Diesel)",
-        "Automated shortage detection",
-        "Interactive vehicle showcase",
-        "10 input file channels",
+      screenshots: [
+        {
+          id: "vin_dashboard_shortage",
+          title: "Cockpit & Wiring Shortage Matrix",
+          caption: "Real-time shortage calculation across PBS, Sealant, and Total Float",
+          description: "Live component matrix identifying immediate part deficits against daily VIN generation schedules.",
+          cardUrl: getAssetUrl("projects/cards/vin_dashboard_shortage.png"),
+          fullUrl: getAssetUrl("projects/full/vin_dashboard_shortage.png"),
+          thumbUrl: getAssetUrl("projects/thumbs/vin_dashboard_shortage.png"),
+          aspectRatio: "16/10",
+          tag: "Shortage Matrix",
+        },
       ],
-      metrics: {
-        inputFiles: "10",
-        vehicleTracks: "2 (TCF1 & TCF2)",
-        planningDays: "3-4",
-      },
-      screenshots: [],
-      demoUrl: "",
-      Code2Url: "",
-    },
-    {
-      id: "datewise-planning",
-      title: "Datewise Production Planning System",
-      category: "excel-automation",
-      featured: true,
-      description:
-        "Finite capacity scheduling system for automotive component manufacturing, allocating daily production across 13 manufacturing lines with setup loss calculations.",
-      problem:
-        "Manual day-wise production scheduling across 13 manufacturing lines doesn't account for setup losses, line capacities, and holiday calendars accurately.",
-      solution:
-        "Built a capacity-aware scheduling engine that calculates setup time deductions, performs sequential multi-day allocation with Sunday/holiday skip, and generates official production plan documents.",
-      input: "Excel production plan with part numbers, line assignments, setup flags",
-      output:
-        "Datewise production schedule (Excel), weekly formatted report (PRH.F.46.00), linewise PDF reports",
-      technologies: [
-        "Python",
-        "Streamlit",
-        "Pandas",
-        "NumPy",
-        "XlsxWriter",
-        "ReportLab",
-      ],
-      keyFeatures: [
-        "Finite capacity scheduling across 13 lines",
-        "Setup loss engine (Major: 240 min, Minor: 60 min deductions)",
-        "Sequential multi-day backlog rollover",
-        "Calendar intelligence (skip Sundays & holidays)",
-        "Dual modes: Weekly & Monthly planning",
-        "Automated PDF report generation",
-      ],
-      metrics: {
-        lines: "13",
-        dailyCapacityMinutes: "1,320",
-        planningModes: "2 (Weekly & Monthly)",
-      },
-      screenshots: [],
-      demoUrl: "",
-      Code2Url: "",
     },
     {
       id: "paint-aging-analytics",
+      number: "05",
       title: "Paint Shop Aging Analytics",
+      tagline: "Multi-Stage WIP Aging Engine with Holiday Intelligence & Quality Hold Isolation",
       category: "streamlit-dashboard",
       featured: false,
+      appType: "Streamlit Web App",
+      appUrl: "tmlage.streamlit.app",
       description:
-        "Multi-stage WIP aging analysis system for paint shop operations, tracking vehicle bodies from BIW through paint stages with holiday-aware aging calculations.",
+        "Multi-stage WIP residence and aging analysis system tracking vehicle bodies from Body-in-White (BIW) through Paint Treatment (PT) to Painted Body Storage (PBS).",
       problem:
-        "Vehicle bodies in paint shop stages experience aging due to production delays or quality holds, but tracking this across BIW→PT→PBS stages manually is unreliable.",
+        "Vehicle bodies lingering in paint buffers due to quality holds or delays cause aging penalties, but tracking residence time manually across shifts is inaccurate.",
       solution:
-        "Built an interactive aging report that classifies vehicles into standardized aging buckets (1 Day to 15+ Days), excludes plant holidays from calculations, and tracks quality hold root causes.",
-      input: "PPC float report from SAP/MES (.xlsb/.xlsx/.csv)",
-      output:
-        "Executive summary with aging KPIs, 3 Excel reports (BIW/PT Aging, PBS Aging, Hold Cab Report)",
-      technologies: ["Python", "Streamlit", "Pandas"],
+        "Built an automated analytics application that buckets vehicles into standardized aging intervals (1d, 2-3d, 4-7d, 8-10d, 11-15d, >15d), excludes plant holidays, and isolates quality hold causes.",
+      input: "PPC float reports from SAP/MES (.xlsb/.xlsx/.csv)",
+      output: "Executive aging KPI cards, 3 formatted Excel reports (BIW/PT, PBS, Hold Cabs)",
+      technologies: ["Python", "Streamlit", "Pandas", "OpenPyXL"],
       keyFeatures: [
-        "Multi-stage WIP pipeline analysis (BIW → PT → PBS)",
-        "Holiday-aware aging engine",
-        "Color-coded aging severity (green to red)",
-        "Hold cab root-cause attribution",
-        "3 automated Excel report exports",
+        "Multi-stage WIP pipeline visibility (BIW ➔ PT ➔ PBS)",
+        "Holiday exclusion engine (working days vs calendar days)",
+        "Color-coded aging severity distribution tables",
+        "Hold cab root-cause isolation and supervisor attribution",
+        "3 1-click downloadable Excel audit reports",
       ],
+      businessOutcome:
+        "Enables paint shop managers to pinpoint aging bottlenecks instantly and prioritize long-standing vehicle cabs for immediate line processing.",
       metrics: {
-        agingBuckets: "6",
-        paintStages: "3 (BIW→PT, PT→PBS, PBS)",
-        excelReports: "3",
+        stages: "3 WIP Stages",
+        agingBuckets: "6 Aging Intervals",
+        reports: "3 Excel Workbooks",
+        visibility: "100% Buffer Audit",
       },
-      screenshots: [],
-      demoUrl: "",
-      Code2Url: "",
-    },
-    {
-      id: "float-reports-portal",
-      title: "PPC Float Reports Portal",
-      category: "streamlit-dashboard",
-      featured: false,
-      description:
-        "Automated vehicle float tracking and taper analysis portal, reconciling daily float data across assembly lines with historical trend visibility.",
-      problem:
-        "Daily collation and trend analysis of vehicle float reports across TCF1 and TCF2 lines requires repetitive manual work and is prone to errors.",
-      solution:
-        "Built a smart file-mapping dashboard that automatically identifies file roles and dates from filenames, computes multi-day float taper trends, and generates consolidated Excel reports.",
-      input: "Daily float reports for TCF1 and TCF2 lines",
-      output:
-        "Interactive taper dashboards, KPI metrics, consolidated multi-sheet Excel export",
-      technologies: ["Python", "Streamlit", "Pandas"],
-      keyFeatures: [
-        "Smart file mapping from filenames",
-        "Dynamic date discovery for trend comparison",
-        "Multi-tab dashboard",
-        "Consolidated Excel report export",
+      screenshots: [
+        {
+          id: "paint_aging_main",
+          title: "Paint Aging Summary & Breakdown",
+          caption: "WIP vehicle aging across BIW→PT (130), PT→PBS (192), PBS (15), and Hold Cabs (19)",
+          description: "Interactive dashboard categorizing vehicle models (Punch, Nova, Harrier, Safari) into standardized aging buckets with holiday exclusion.",
+          cardUrl: getAssetUrl("projects/cards/paint_aging_main.png"),
+          fullUrl: getAssetUrl("projects/full/paint_aging_main.png"),
+          thumbUrl: getAssetUrl("projects/thumbs/paint_aging_main.png"),
+          aspectRatio: "16/10",
+          tag: "WIP Aging Analytics",
+        },
       ],
-      metrics: {
-        inputFiles: "Up to 12",
-        assemblyLines: "2 (TCF1 & TCF2)",
-        trendDays: "3+",
-      },
-      screenshots: [],
-      demoUrl: "",
-      Code2Url: "",
     },
     {
       id: "shiftwise-planner",
+      number: "06",
       title: "ShiftWise Production Planner",
+      tagline: "1-Day Waterfall Production Planner for High-Speed Lines",
       category: "excel-automation",
       featured: false,
+      appType: "Excel Pipeline",
+      appUrl: "shiftwise-planner.streamlit.app",
       description:
-        "Daily production planning tool that allocates targets across 3 operating shifts with cycle time calculations and setup loss deductions.",
+        "Daily operational production planning tool that splits production targets across 3 working shifts using cycle time rates (parts per minute) and setup loss deductions.",
       problem:
-        "Allocating daily production targets across 3 shifts while accounting for line cycle times, changeovers, and shift capacity differences is complex and error-prone.",
+        "Sequencing daily part orders across multiple high-speed manufacturing lines while balancing shift capacity and setup overhead is prone to manual spreadsheet errors.",
       solution:
-        "Built a waterfall shift allocation engine that sequentially fills shift capacity based on parts-per-minute rates and automatically handles setup time deductions.",
-      input: "Daily production plan Excel file with part numbers, quantities, and setup flags",
-      output:
-        "Shift-split production schedule, utilization charts, Plan vs Actual comparison",
+        "Engineered a waterfall allocation engine that sequentially fills shift capacities based on PPM line rates and automatically deducts setup time overheads.",
+      input: "Daily production plan Excel files with part numbers, quantities, and setup flags",
+      output: "Shift-split production schedule, utilization metrics, Plan vs Actuals tracking dashboard",
       technologies: ["Python", "Streamlit", "Pandas", "XlsxWriter"],
       keyFeatures: [
-        "Waterfall allocation across 3 shifts",
-        "PPM-based cycle time calculations",
-        "Setup overhead deduction",
-        "Plan vs Actual performance tracking",
+        "Waterfall allocation logic across 3 operating shifts",
+        "Line cycle time calculations based on Parts Per Minute (PPM)",
+        "Setup overhead deduction for major and minor changeovers",
+        "Built-in Actuals Tracking Dashboard for Performance vs Plan",
+        "Excel input template download and completed plan upload",
       ],
+      businessOutcome:
+        "Eliminated manual mathematical errors and delivered balanced shift allocations in seconds.",
       metrics: {
-        shifts: "3",
-        lines: "12+ lines",
+        shifts: "3 Operating Shifts",
+        lines: "13 High-Speed Lines",
+        logic: "Waterfall PPM",
+        tracking: "Plan vs Actuals",
       },
-      screenshots: [],
-      demoUrl: "",
-      Code2Url: "",
+      screenshots: [
+        {
+          id: "shiftwise_planner_main",
+          title: "Waterfall Production Planner",
+          caption: "High-speed line rates (PPM), template download & performance tracking",
+          description: "Production planning interface configuring line cycle times across 13 lines with actuals performance tracking dashboard.",
+          cardUrl: getAssetUrl("projects/cards/shiftwise_planner_main.png"),
+          fullUrl: getAssetUrl("projects/full/shiftwise_planner_main.png"),
+          thumbUrl: getAssetUrl("projects/thumbs/shiftwise_planner_main.png"),
+          aspectRatio: "16/10",
+          tag: "Shift Allocation",
+        },
+      ],
+    },
+    {
+      id: "float-reports-portal",
+      number: "07",
+      title: "PPC Float Reports Portal",
+      tagline: "TCF Final Vehicle Summary & Multi-Day Float Taper Analysis",
+      category: "streamlit-dashboard",
+      featured: false,
+      appType: "Streamlit Web App",
+      appUrl: "tmlppc.streamlit.app",
+      description:
+        "Automated vehicle float tracking and multi-day trend analysis portal reconciling daily float data across assembly lines.",
+      problem:
+        "Daily consolidation and trend discovery of vehicle float reports across TCF1 and TCF2 assembly lines required repetitive manual workbook merging.",
+      solution:
+        "Built a smart file-mapping portal that ingests 4 daily float reports plus historical 2-day records to compute float taper trends and generate consolidated summaries.",
+      input: "Daily float reports for TCF1 and TCF2 lines (.xls/.xlsx)",
+      output: "Interactive taper dashboards, KPI status cards, consolidated multi-sheet Excel exports",
+      technologies: ["Python", "Streamlit", "Pandas", "OpenPyXL"],
+      keyFeatures: [
+        "Smart multi-file mapping (Today's 4 float reports + 2 historical days)",
+        "TCF1 and TCF2 Created & Inspection Float status validation",
+        "Dynamic multi-day float taper discovery",
+        "Automated exclusion of legacy vehicle records",
+      ],
+      businessOutcome:
+        "Accelerates multi-day float reconciliation from 45 minutes to under 500ms.",
+      metrics: {
+        files: "Up to 6 Reports",
+        lines: "TCF1 & TCF2 Lines",
+        trend: "3-Day Float Taper",
+        speed: "< 500ms",
+      },
+      screenshots: [
+        {
+          id: "float_reports_portal_main",
+          title: "PPC Float Reports Portal",
+          caption: "4 Float reports upload, historical taper rows & status validation",
+          description: "Operational portal managing daily and historical float reports for assembly line trend analysis.",
+          cardUrl: getAssetUrl("projects/cards/float_reports_portal_main.png"),
+          fullUrl: getAssetUrl("projects/full/float_reports_portal_main.png"),
+          thumbUrl: getAssetUrl("projects/thumbs/float_reports_portal_main.png"),
+          aspectRatio: "16/10",
+          tag: "Float Reconciler",
+        },
+      ],
     },
   ],
 
   // ----------------------------------------------------------
-  // PROJECT CATEGORIES (for filter tabs)
+  // PROJECT CATEGORIES (Filter Tabs)
   // ----------------------------------------------------------
   projectCategories: [
-    { id: "all", label: "All" },
+    { id: "all", label: "All Projects" },
     { id: "streamlit-dashboard", label: "Streamlit Dashboards" },
-    { id: "excel-automation", label: "Excel Automation" },
+    { id: "excel-automation", label: "Excel Pipelines" },
     { id: "production-planning", label: "PPC & SCM Engines" },
   ],
 
   // ----------------------------------------------------------
-  // EXPERIENCE (Resume history)
+  // EXPERIENCE (Verified Career History)
   // ----------------------------------------------------------
   experience: [
+    {
+      company: "Tata Motors Passenger Vehicle Ltd",
+      role: "SCM / PPC / Order Fulfillment Professional",
+      department: "Production Planning & Control / Supply Chain",
+      period: "Current Role",
+      duration: "Ongoing",
+      location: "Pune, India",
+      current: true,
+      achievements: [
+        "Managing end-to-end supply chain planning, aggregate vehicle sequencing, and order fulfillment across TCF assembly tracks",
+        "Developing custom Python automation engines and Streamlit operational dashboards for real-time shopfloor visibility",
+        "Spearheading 10-channel data synchronization utilities that accelerate shift reporting from hours to seconds",
+        "Collaborating with BIW, Paint Shop, and TCF teams to eliminate component shortages and prevent line starvation",
+      ],
+      highlights: [
+        "Supply Chain Management",
+        "Line Sequencing",
+        "Python Automation",
+        "Streamlit Dashboards",
+        "BOM Validation",
+      ],
+    },
     {
       company: "Rheinmetall Automotive India PVT LTD",
       subtitle: "BU Bearings (formerly KSPG Automotive)",
@@ -542,7 +903,7 @@ export const siteConfig = {
   ],
   certifications: [
     {
-      name: "SAP PP / MM",
+      name: "SAP PP / MM Certified",
       institution: "Pune Institute of SAP",
       period: "May 2019 – Oct 2019",
     },
@@ -552,12 +913,12 @@ export const siteConfig = {
       title: "Excellence in Digital Transformation Using AI",
       date: "February 2026",
       description:
-        "Spearheaded the transition from manual PPC/SCM reporting to fully automated, AI-driven workflows and real-time analytics.",
+        "Awarded for spearheading the transition from manual PPC/SCM spreadsheet reporting to fully automated, Python-driven workflows and real-time Streamlit analytics.",
     },
   ],
 
   // ----------------------------------------------------------
-  // SKILLS
+  // SKILLS MATRIX
   // ----------------------------------------------------------
   skills: {
     "Business Domain": [
@@ -567,31 +928,32 @@ export const siteConfig = {
       "Material Requirement Planning (MRP)",
       "Inventory Management",
       "Order Fulfillment",
-      "Capacity Planning",
+      "Capacity Planning & Balancing",
+      "FIFO Clear-to-Build Allocation",
     ],
-    ERP: ["SAP PP (Production Planning)", "SAP MM (Materials Management)", "SAP IPMS"],
-    Automation: [
+    "Enterprise Systems (ERP)": [
+      "SAP PP (Production Planning)",
+      "SAP MM (Materials Management)",
+      "SAP IPMS",
+      "MES / Shopfloor Float Systems",
+    ],
+    "Python Automation Engine": [
       "Python",
-      "Pandas",
+      "Pandas (In-Memory Processing)",
       "NumPy",
       "OpenPyXL",
       "XlsxWriter",
       "pyxlsb",
-      "ReportLab",
-      "Excel Automation",
+      "ReportLab (PDF Generation)",
+      "Multi-File Data Pipelines",
     ],
-    "Data & Dashboards": [
+    "Operational Dashboards": [
       "Streamlit",
       "Matplotlib",
-      "Data Visualization",
-      "KPI Reporting",
-      "Plan vs Actual Dashboards",
-    ],
-    "AI & Reporting": [
-      "AI-Driven Production Scheduling",
-      "Automated Reporting Workflows",
-      "Business Process Automation",
-      "BeautifulSoup4 (Data Parsing)",
+      "Interactive Filters & Date Pickers",
+      "Plan vs Actual Analytics",
+      "Multi-Stage WIP Aging Analytics",
+      "Telegram Bot Automated Dispatch",
     ],
   },
 
@@ -601,81 +963,67 @@ export const siteConfig = {
   impact: {
     qualitative: [
       {
-        title: "Reduced Manual Work",
+        title: "Reduced Manual Friction",
         description: "Automated repetitive Excel-based planning and reporting workflows",
         icon: "Clock",
       },
       {
-        title: "Fewer Repetitive Tasks",
-        description: "Replaced daily copy-paste operations with one-click Python automation",
+        title: "Zero Human Copy-Paste",
+        description: "Replaced daily copy-paste operations with 1-click Python automation",
         icon: "RefreshCw",
       },
       {
-        title: "Improved Reporting Speed",
-        description: "Reports that took hours now generate in seconds",
+        title: "Instant Shift Reporting",
+        description: "Reports that previously took hours across shifts now generate in under 5 seconds",
         icon: "Zap",
       },
       {
-        title: "Better Data Accuracy",
-        description: "Eliminated manual data entry errors with automated validation",
+        title: "Deterministic Validation",
+        description: "Eliminated manual data entry errors with automated BOM & schema validation",
         icon: "CheckCircle",
       },
       {
-        title: "Faster Decision Making",
-        description: "Real-time dashboards replacing static periodic reports",
+        title: "Real-Time Decision Making",
+        description: "Live Streamlit dashboards replacing static, outdated spreadsheets",
         icon: "TrendingUp",
       },
       {
-        title: "Scalable Reporting",
-        description: "Solutions handle growing data volumes without additional manual effort",
+        title: "Scalable Data Pipelines",
+        description: "Solutions handle growing data volumes without additional manual labor",
         icon: "ArrowUpRight",
       },
     ],
-    quantitative: {
-      hours_saved: null,
-      processing_time_before: null,
-      processing_time_after: null,
-      error_reduction: null,
-      reports_automated: 7,
-      files_processed: null,
-    },
   },
 
   // ----------------------------------------------------------
-  // HOW I WORK (4-step process matching user brief)
+  // HOW I WORK (4-Step Process)
   // ----------------------------------------------------------
   process: [
     {
       step: "01",
-      title: "Understand",
-      description: "Understand the existing manual workflow, data sources, and operational pain points.",
+      title: "Understand the Business Flow",
+      description:
+        "I review your actual spreadsheets, ERP dumps, and manual handoffs to understand the business logic behind the numbers.",
     },
     {
       step: "02",
-      title: "Analyze",
-      description: "Identify repetitive work, errors, data bottlenecks, and automation opportunities.",
+      title: "Analyze & Map Constraints",
+      description:
+        "Identify repetitive steps, formula breakages, setup loss rules, capacity ceilings, and exception conditions.",
     },
     {
       step: "03",
-      title: "Automate",
-      description: "Build Python, Excel, or Streamlit automation with robust validation rules.",
+      title: "Build the Python Engine",
+      description:
+        "Develop high-performance Python scripts, validation rules, and Streamlit dashboards tailored to your exact operational requirements.",
     },
     {
       step: "04",
-      title: "Deliver",
-      description: "Provide a simple, reliable solution with clear documentation and support.",
+      title: "Deliver & Document",
+      description:
+        "Provide a clean 1-click executable or live web application with clear user guides, formatted Excel outputs, and ongoing reliability.",
     },
   ],
-
-  // ----------------------------------------------------------
-  // SEO
-  // ----------------------------------------------------------
-  seo: {
-    title: "Nikhil Waradkar | Python Excel Automation & Streamlit Solutions",
-    description:
-      "Independent Automation Consultant specializing in Python Excel automation, Streamlit dashboards, and business reporting backed by 12+ years of manufacturing, PPC, and SCM experience.",
-    ogImage: "",
-  },
 
   // ----------------------------------------------------------
   // CONTACT FORM
@@ -683,14 +1031,17 @@ export const siteConfig = {
   contactForm: {
     heading: "Have a Manual Process That Should Be Automated?",
     subheading:
-      "Send me your current Excel workflow or reporting process. I'll help identify what can be automated.",
+      "Send me your current Excel workflow or reporting challenge. I'll help identify the exact automation architecture needed.",
     primaryCTA: "Start a Project",
     secondaryCTA: "Email Me Directly",
   },
 };
 
-// Icon mapping for services and UI
-export const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
+// Lucide Icon mapping
+export const iconMap: Record<
+  string,
+  React.ComponentType<{ size?: number; className?: string }>
+> = {
   FileSpreadsheet,
   BarChart3,
   LayoutDashboard,
@@ -702,5 +1053,16 @@ export const iconMap: Record<string, React.ComponentType<{ size?: number; classN
   MapPin,
   Code2,
   Globe,
-  Briefcase
+  Briefcase,
+  Layers,
+  Cpu,
+  Zap,
+  TrendingUp,
+  CheckCircle2,
+  ShieldCheck,
+  Calendar,
+  AlertTriangle,
+  Send,
+  SlidersHorizontal,
+  TableProperties,
 };
