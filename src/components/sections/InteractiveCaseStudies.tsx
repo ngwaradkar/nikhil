@@ -11,10 +11,10 @@ import {
   TrendingUp,
   X,
   FileSpreadsheet,
-  Cpu,
   ArrowUpRight,
   Layers,
-  Maximize2
+  Maximize2,
+  AlertCircle
 } from "lucide-react";
 import { ScrollReveal } from "../ui/ScrollReveal";
 import { motion, AnimatePresence } from "framer-motion";
@@ -37,7 +37,7 @@ const categorySignalColor: Record<
   },
   "production-planning": {
     color: "#06B6D4",
-    label: "PPC & SCM Engine",
+    label: "PPC & SCM Scheduler",
     accentBg: "bg-[#06B6D4]/10",
     border: "border-[#06B6D4]/30",
   },
@@ -66,14 +66,14 @@ export default function InteractiveCaseStudies() {
   };
 
   return (
-    <section id="projects" className="section-padding bg-[#080A0D] relative z-10 border-t border-white/5">
+    <section id="case-studies" className="section-padding bg-[#080A0D] relative z-10 border-t border-white/5">
       <div className="container-custom">
         {/* Section Header & Filter Tabs */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-14 gap-6">
           <SectionHeading
-            label="Verified Case Studies"
+            label="Real Production Case Studies"
             title="Featured Automation Projects"
-            description="Real production-grade Python pipelines, interactive Streamlit operational dashboards, and finite capacity scheduling engines backed by shopfloor visual evidence."
+            description="Real Python pipelines, interactive Streamlit operational dashboards, and capacity scheduling engines backed by verifiable before vs after evidence."
             align="left"
             className="mb-0 font-display"
           />
@@ -125,6 +125,7 @@ export default function InteractiveCaseStudies() {
             };
 
             const isEven = projectIndex % 2 === 1;
+            const story = project.story;
 
             return (
               <ScrollReveal key={project.id}>
@@ -142,7 +143,7 @@ export default function InteractiveCaseStudies() {
                     isEven ? "lg:flex-row-reverse" : ""
                   }`}>
                     
-                    {/* Left Column: Project Metadata, Problem/Solution, Metrics (5 Cols) */}
+                    {/* Left Column: Project Metadata, Before/After Story, Metrics (5 Cols) */}
                     <div className={`lg:col-span-5 flex flex-col justify-between h-full space-y-6 ${
                       isEven ? "lg:order-2" : "lg:order-1"
                     }`}>
@@ -170,46 +171,82 @@ export default function InteractiveCaseStudies() {
                         </h3>
 
                         {/* Tagline */}
-                        <p className="text-xs sm:text-sm font-mono text-[#22D3EE] mb-4 font-medium leading-relaxed">
+                        <p className="text-xs sm:text-sm font-mono text-[#22D3EE] mb-5 font-medium leading-relaxed">
                           {project.tagline}
                         </p>
 
-                        {/* Business Problem vs Automation Solution */}
-                        <div className="space-y-3 mb-6">
-                          <div className="p-3.5 rounded-xl bg-[#050505] border border-amber-500/15">
-                            <span className="text-[10px] font-mono text-amber-400 font-bold uppercase tracking-wider block mb-1">
-                              Operational Problem:
-                            </span>
-                            <p className="text-xs text-[#8B98AC] leading-relaxed">
-                              {project.problem}
-                            </p>
-                          </div>
+                        {/* Structured Before vs After Story Blocks */}
+                        {story ? (
+                          <div className="space-y-3 mb-6">
+                            {/* BEFORE */}
+                            <div className="p-3.5 rounded-xl bg-[#050505] border border-red-500/20">
+                              <div className="flex items-center gap-1.5 text-red-400 font-mono text-[11px] font-bold uppercase tracking-wider mb-2">
+                                <AlertCircle size={13} className="text-red-400 shrink-0" />
+                                <span>Before Automation (Manual Friction):</span>
+                              </div>
+                              <ul className="space-y-1 text-xs text-[#8B98AC]">
+                                {story.before.map((b, i) => (
+                                  <li key={i} className="flex items-start gap-1.5 leading-relaxed">
+                                    <span className="text-red-400 font-bold">•</span>
+                                    <span>{b}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
 
-                          <div className="p-3.5 rounded-xl bg-[#050505] border border-[#3B82F6]/20">
-                            <span className="text-[10px] font-mono text-[#22D3EE] font-bold uppercase tracking-wider block mb-1">
-                              Automation Solution:
-                            </span>
-                            <p className="text-xs text-[#F1F5F9]/90 leading-relaxed">
-                              {project.solution}
-                            </p>
-                          </div>
-                        </div>
+                            {/* AFTER */}
+                            <div className="p-3.5 rounded-xl bg-[#050505] border border-emerald-500/20">
+                              <div className="flex items-center gap-1.5 text-emerald-400 font-mono text-[11px] font-bold uppercase tracking-wider mb-2">
+                                <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
+                                <span>After Automation (Automated Result):</span>
+                              </div>
+                              <ul className="space-y-1 text-xs text-[#F1F5F9]/90">
+                                {story.after.map((a, i) => (
+                                  <li key={i} className="flex items-start gap-1.5 leading-relaxed">
+                                    <span className="text-emerald-400 font-bold">✓</span>
+                                    <span>{a}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
 
-                        {/* Key Capabilities Checklist */}
-                        <div className="mb-6">
-                          <span className="text-[11px] font-mono font-bold text-white uppercase tracking-wider block mb-2.5 flex items-center gap-1.5">
-                            <Cpu size={13} className="text-[#3B82F6]" />
-                            <span>Key Capabilities</span>
-                          </span>
-                          <ul className="space-y-1.5">
-                            {project.keyFeatures.slice(0, 4).map((feat, i) => (
-                              <li key={i} className="flex items-start gap-2 text-xs text-[#8B98AC]">
-                                <CheckCircle2 size={13} className="text-[#10B981] shrink-0 mt-0.5" />
-                                <span className="leading-snug">{feat}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
+                            {/* BUSINESS IMPACT */}
+                            <div className="p-3.5 rounded-xl bg-[#3B82F6]/10 border border-[#3B82F6]/30">
+                              <div className="flex items-center gap-1.5 text-[#3B82F6] font-mono text-[11px] font-bold uppercase tracking-wider mb-1.5">
+                                <Zap size={13} className="text-[#3B82F6] shrink-0" />
+                                <span>Business Impact:</span>
+                              </div>
+                              <ul className="space-y-1 text-xs text-white/90">
+                                {story.businessImpact.map((imp, i) => (
+                                  <li key={i} className="flex items-start gap-1.5 leading-relaxed">
+                                    <span className="text-[#22D3EE] font-bold">➔</span>
+                                    <span>{imp}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="space-y-3 mb-6">
+                            <div className="p-3.5 rounded-xl bg-[#050505] border border-amber-500/15">
+                              <span className="text-[10px] font-mono text-amber-400 font-bold uppercase tracking-wider block mb-1">
+                                Operational Problem:
+                              </span>
+                              <p className="text-xs text-[#8B98AC] leading-relaxed">
+                                {project.problem}
+                              </p>
+                            </div>
+
+                            <div className="p-3.5 rounded-xl bg-[#050505] border border-[#3B82F6]/20">
+                              <span className="text-[10px] font-mono text-[#22D3EE] font-bold uppercase tracking-wider block mb-1">
+                                Automation Solution:
+                              </span>
+                              <p className="text-xs text-[#F1F5F9]/90 leading-relaxed">
+                                {project.solution}
+                              </p>
+                            </div>
+                          </div>
+                        )}
 
                         {/* Metrics Grid */}
                         <div className="grid grid-cols-2 gap-2 mb-6">
@@ -242,7 +279,7 @@ export default function InteractiveCaseStudies() {
                           onClick={() => setSelectedCaseStudy(project)}
                           className="btn-primary-glow text-xs font-mono py-2.5 px-4 flex items-center gap-2 cursor-pointer"
                         >
-                          <span>View Case Study</span>
+                          <span>Full Case Study</span>
                           <ArrowUpRight size={14} />
                         </button>
 
@@ -252,8 +289,16 @@ export default function InteractiveCaseStudies() {
                           className="btn-secondary-dark text-xs font-mono py-2.5 px-4 flex items-center gap-2 cursor-pointer border-[#1F2937] hover:border-[#3B82F6]"
                         >
                           <Maximize2 size={13} className="text-[#3B82F6]" />
-                          <span>Expand Screenshots ({project.screenshots.length})</span>
+                          <span>Screenshots ({project.screenshots.length})</span>
                         </button>
+
+                        <a
+                          href="#contact"
+                          className="text-xs font-mono text-[#8B98AC] hover:text-white flex items-center gap-1 transition-colors ml-auto"
+                        >
+                          <span>Automate Similar Flow</span>
+                          <ArrowUpRight size={12} className="text-[#3B82F6]" />
+                        </a>
                       </div>
                     </div>
 
@@ -264,7 +309,7 @@ export default function InteractiveCaseStudies() {
                       <ProjectGallery
                         screenshots={project.screenshots}
                         appUrl={project.appUrl}
-                        badge={project.featured ? "Production Live" : "Verified App"}
+                        badge={project.featured ? "Shopfloor Verified" : "Production Utility"}
                         badgeColor={signal.color}
                         onOpenLightbox={(idx) => openLightbox(project, idx)}
                         priority={projectIndex === 0}
@@ -335,26 +380,74 @@ export default function InteractiveCaseStudies() {
                 </p>
               </div>
 
-              {/* Problem & Solution Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                <div className="p-4 rounded-xl bg-[#050505] border border-amber-500/20">
-                  <span className="text-xs font-mono text-amber-400 font-bold uppercase tracking-wider block mb-1.5">
-                    Root Operational Problem
-                  </span>
-                  <p className="text-xs text-[#8B98AC] leading-relaxed">
-                    {selectedCaseStudy.problem}
-                  </p>
-                </div>
+              {/* Structured Story Breakdown: Before ➔ What I Built ➔ After */}
+              {selectedCaseStudy.story ? (
+                <div className="space-y-4 mb-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="p-4 rounded-xl bg-[#050505] border border-red-500/20">
+                      <span className="text-xs font-mono text-red-400 font-bold uppercase tracking-wider block mb-2">
+                        Before Automation:
+                      </span>
+                      <ul className="space-y-1.5 text-xs text-[#8B98AC]">
+                        {selectedCaseStudy.story.before.map((b, i) => (
+                          <li key={i} className="flex items-start gap-1.5 leading-relaxed">
+                            <span className="text-red-400 font-bold">•</span>
+                            <span>{b}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-                <div className="p-4 rounded-xl bg-[#050505] border border-[#3B82F6]/30">
-                  <span className="text-xs font-mono text-[#22D3EE] font-bold uppercase tracking-wider block mb-1.5">
-                    Implemented Solution
-                  </span>
-                  <p className="text-xs text-[#F1F5F9]/90 leading-relaxed">
-                    {selectedCaseStudy.solution}
-                  </p>
+                    <div className="p-4 rounded-xl bg-[#050505] border border-emerald-500/20">
+                      <span className="text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider block mb-2">
+                        After Automation:
+                      </span>
+                      <ul className="space-y-1.5 text-xs text-[#F1F5F9]/90">
+                        {selectedCaseStudy.story.after.map((a, i) => (
+                          <li key={i} className="flex items-start gap-1.5 leading-relaxed">
+                            <span className="text-emerald-400 font-bold">✓</span>
+                            <span>{a}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-[#050505] border border-[#3B82F6]/30">
+                    <span className="text-xs font-mono text-[#22D3EE] font-bold uppercase tracking-wider block mb-2">
+                      What I Built & Implemented:
+                    </span>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#94A3B8]">
+                      {selectedCaseStudy.story.whatIBuilt.map((w, i) => (
+                        <li key={i} className="flex items-start gap-1.5 leading-relaxed">
+                          <CheckCircle2 size={13} className="text-[#3B82F6] shrink-0 mt-0.5" />
+                          <span>{w}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                  <div className="p-4 rounded-xl bg-[#050505] border border-amber-500/20">
+                    <span className="text-xs font-mono text-amber-400 font-bold uppercase tracking-wider block mb-1.5">
+                      Operational Problem
+                    </span>
+                    <p className="text-xs text-[#8B98AC] leading-relaxed">
+                      {selectedCaseStudy.problem}
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-[#050505] border border-[#3B82F6]/30">
+                    <span className="text-xs font-mono text-[#22D3EE] font-bold uppercase tracking-wider block mb-1.5">
+                      Implemented Solution
+                    </span>
+                    <p className="text-xs text-[#F1F5F9]/90 leading-relaxed">
+                      {selectedCaseStudy.solution}
+                    </p>
+                  </div>
+                </div>
+              )}
 
               {/* Data Pipeline Inputs & Outputs */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-xs font-mono">
@@ -377,22 +470,6 @@ export default function InteractiveCaseStudies() {
                     {selectedCaseStudy.output}
                   </p>
                 </div>
-              </div>
-
-              {/* Key Features List */}
-              <div className="mb-6">
-                <h4 className="text-xs font-mono font-bold text-white uppercase tracking-wider mb-3 flex items-center gap-1.5">
-                  <Cpu size={14} className="text-[#3B82F6]" />
-                  <span>Key Architectural Capabilities</span>
-                </h4>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {selectedCaseStudy.keyFeatures.map((feat, i) => (
-                    <li key={i} className="flex items-start gap-2 text-xs text-[#8B98AC]">
-                      <CheckCircle2 size={13} className="text-[#10B981] shrink-0 mt-0.5" />
-                      <span className="leading-relaxed">{feat}</span>
-                    </li>
-                  ))}
-                </ul>
               </div>
 
               {/* Business Outcome Callout */}

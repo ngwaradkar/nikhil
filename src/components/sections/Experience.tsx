@@ -20,8 +20,8 @@ export default function Experience() {
         <ScrollReveal>
           <SectionHeading
             label="Industry Track Record"
-            title="12+ Years Manufacturing & PPC Domain Depth"
-            description="Proven background across automotive passenger vehicle assembly, tier-1 supplier logistics, master production scheduling (MPS), SAP PP/MM, and Python workflow automation."
+            title="12+ Years Manufacturing & Operations Domain Depth"
+            description="Proven background across automotive passenger vehicle assembly, tier-1 bearing manufacturing, master production scheduling (MPS), SAP PP/MM, and custom Python workflow automation."
             align="center"
             className="mb-16 font-display"
           />
@@ -35,7 +35,7 @@ export default function Experience() {
               {/* Top Badge */}
               <div className="absolute top-0 right-0 px-4 py-1.5 bg-[#3B82F6] text-white text-[11px] font-mono font-bold uppercase tracking-wider rounded-bl-2xl flex items-center gap-1.5 shadow-md">
                 <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-                <span>Current Professional Engagement</span>
+                <span>Current Professional Role</span>
               </div>
 
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pt-3">
